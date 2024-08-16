@@ -53,6 +53,6 @@ jobs:
               mkdir /home/ec2-user/yesable_server/current
               mv /home/ec2-user/yesable_server/tobe/project.jar /home/ec2-user/yesable_server/current/project.jar
               cd /home/ec2-user/yesable_server/current
-              sudo fuser -k -n tcp 8081 || true
+              kill $(lsof -t -i :9475)
               nohup java -jar project.jar --spring.profiles.active=local > ~/yesable_server/logs/server.log 2>&1 &
               rm -rf /home/ec2-user/yesable_server/tobe
