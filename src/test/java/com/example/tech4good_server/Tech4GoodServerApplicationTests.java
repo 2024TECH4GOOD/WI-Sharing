@@ -8,8 +8,4 @@ import org.springframework.test.context.ActiveProfiles;
 @ActiveProfiles("test")
 class Tech4GoodServerApplicationTests {
 
-    @Test
-    void contextLoads() {
-    }
-
 }
