@@ -53,6 +53,9 @@ jobs:
               mkdir /home/ec2-user/yesable_server/current
               mv /home/ec2-user/yesable_server/tobe/project.jar /home/ec2-user/yesable_server/current/project.jar
               cd /home/ec2-user/yesable_server/current
-              kill $(lsof -t -i :9475)
+              pid=$(lsof -t -i :9475)
+              if [ -n "$pid" ]; then
+              kill $pid
+              fi
               nohup java -jar project.jar --spring.profiles.active=local > ~/yesable_server/logs/server.log 2>&1 &
               rm -rf /home/ec2-user/yesable_server/tobe
