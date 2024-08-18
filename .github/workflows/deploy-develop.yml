@@ -49,19 +49,19 @@ jobs:
             envs: APPLICATION_PROPERTIES
             script_stop: true
             script: |
-              echo "Removing old current directory..."
+              # Remove old current directory
               rm -rf /home/***/yesable_server/current
   
-              echo "Creating new current directory..."
-              mkdir /home/***/yesable_server/current
+              # Create parent directories if they do not exist, then create the current directory
+              mkdir -p /home/***/yesable_server/current
   
-              echo "Moving JAR file..."
+              # Move the JAR file to the new current directory
               mv /home/***/yesable_server/tobe/project.jar /home/***/yesable_server/current/project.jar
   
-              echo "Changing directory to current..."
+              # Change to the current directory
               cd /home/***/yesable_server/current
   
-              echo "Checking for process on port 9475..."
+              # Check if there is a process running on port 9475, and kill it if found
               pid=$(lsof -t -i :9475)
               if [ -n "$pid" ]; then
                 echo "Killing process $pid..."
@@ -70,8 +70,8 @@ jobs:
                 echo "No process found on port 9475."
                 fi
   
-              echo "Starting new server..."
+              # Start the new server process
               nohup java -jar project.jar --spring.profiles.active=local > ~/yesable_server/logs/server.log 2>&1 &
   
-              echo "Cleaning up old tobe directory..."
+              # Remove old 'tobe' directory
               rm -rf /home/***/yesable_server/tobe
