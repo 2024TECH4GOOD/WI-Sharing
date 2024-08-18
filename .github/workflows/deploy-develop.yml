@@ -50,28 +50,28 @@ jobs:
             script_stop: true
             script: |
               # Remove old current directory
-              sudo rm -rf /home/***/yesable_server/current
+              sudo rm -rf /home/ec2-user/yesable_server/current
               if [ $? -ne 0 ]; then
               echo "Failed to remove old current directory"
               exit 1
               fi
   
               # Create parent directories if they do not exist, then create the current directory
-              sudo mkdir -p /home/***/yesable_server/current
+              sudo mkdir -p /home/ec2-user/yesable_server/current
               if [ $? -ne 0 ]; then
                 echo "Failed to create current directory"
                 exit 1
                 fi
   
               # Move the JAR file to the new current directory
-              sudo mv /home/***/yesable_server/tobe/project.jar /home/***/yesable_server/current/project.jar
+              sudo mv /home/ec2-user/yesable_server/tobe/project.jar /home/ec2-user/yesable_server/current/project.jar
               if [ $? -ne 0 ]; then
                 echo "Failed to move project.jar"
                 exit 1
                 fi
   
               # Change to the current directory
-              cd /home/***/yesable_server/current
+              cd /home/ec2-user/yesable_server/current
   
               # Check if there is a process running on port 9475, and kill it if found
               pid=$(lsof -t -i :9475)
@@ -90,7 +90,7 @@ jobs:
                 fi
               
               # Remove old 'tobe' directory
-              sudo rm -rf /home/***/yesable_server/tobe
+              sudo rm -rf /home/ec2-user/yesable_server/tobe
               if [ $? -ne 0 ]; then
                 echo "Failed to remove old 'tobe' directory"
                 exit 1
