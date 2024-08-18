@@ -1,4 +1,4 @@
-package com.example.tech4good_server.global.config;
+package com.example.tech4good_server.global.config.security;
 
 import com.example.tech4good_server.global.security.LoginInterceptor;
 import org.springframework.context.annotation.Configuration;

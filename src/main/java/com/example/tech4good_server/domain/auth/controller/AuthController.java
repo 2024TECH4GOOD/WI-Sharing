@@ -3,7 +3,7 @@ package com.example.tech4good_server.domain.auth.controller;
 
 import com.example.tech4good_server.domain.auth.model.request.LoginRequest;
 import com.example.tech4good_server.domain.auth.model.request.SeniorRegisterRequest;
-import com.example.tech4good_server.domain.auth.model.request.TokenResponse;
+import com.example.tech4good_server.domain.auth.model.response.TokenResponse;
 import com.example.tech4good_server.domain.auth.model.request.YouthRegisterRequest;
 import com.example.tech4good_server.domain.auth.service.AuthService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -39,6 +39,18 @@ public class AuthController {
     }
 
     /**
+     * id 유효성 검사
+     */
+    @Operation(summary = "아이디 유효성 검사", description = """
+             중복 아이디가 있는지 체크한다.
+             사용 가능하면 true, 중복된 아이디가 있으면 false 반환
+            """)
+    @PostMapping("/validate")
+    public Boolean idValidation(String id) {
+        return authService.idValidation(id);
+    }
+
+    /**
      * 청년 회원 가입 요청 Controller
      */
     @Operation(summary = "자립 준비 청년 회원 가입 요청", description = """
@@ -56,8 +68,8 @@ public class AuthController {
              시니어 회원 가입 한다.
             """)
     @PostMapping("/register/senior")
-    public TokenResponse farmerRegister(HttpServletResponse response, @RequestBody SeniorRegisterRequest farmerRegisterRequest) {
-        return authService.seniorRegister(response, farmerRegisterRequest);
+    public TokenResponse farmerRegister(HttpServletResponse response, @RequestBody SeniorRegisterRequest seniorRegisterRequest) {
+        return authService.seniorRegister(response, seniorRegisterRequest);
 
     }
 

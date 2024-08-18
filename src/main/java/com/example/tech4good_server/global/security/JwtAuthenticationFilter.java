@@ -16,7 +16,7 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
 import static com.example.tech4good_server.global.constants.AuthConstants.*;
-import static com.example.tech4good_server.global.constants.MongoField.ROLE;
+import static com.example.tech4good_server.global.constants.CommonConstant.ROLE;
 
 @Slf4j
 @RequiredArgsConstructor

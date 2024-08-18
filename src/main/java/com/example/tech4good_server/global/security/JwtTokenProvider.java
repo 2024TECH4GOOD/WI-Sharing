@@ -19,7 +19,7 @@ import org.springframework.stereotype.Component;
 import java.security.Key;
 import java.util.Base64;
 import java.util.Date;
-import static com.example.tech4good_server.global.constants.MongoField.ROLE;
+import static com.example.tech4good_server.global.constants.CommonConstant.ROLE;
 
 @Slf4j
 @Component

@@ -1,4 +1,4 @@
-package com.example.tech4good_server.global.config;
+package com.example.tech4good_server.global.config.security;
 
 import io.swagger.v3.oas.models.Components;
 import io.swagger.v3.oas.models.OpenAPI;

@@ -6,22 +6,34 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Date;
+
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserInfo {
-    private String userId;
-
+public class UserInfoVo {
     // id
     private String id;
 
     // pw
     private String password;
 
+    // 이름
+    private String name;
+
+    // 성별
+    private String sex;
+
+    // 생일
+    private Date birth;
+
+    // 핸드폰 번호
+    private String phoneNumber;
+
     // 프로필 이미지
     private String profileUrl;
 
-    // 청년, 시니어
+    // 자립 준비 청년, 시니어
     private Role role;
 }

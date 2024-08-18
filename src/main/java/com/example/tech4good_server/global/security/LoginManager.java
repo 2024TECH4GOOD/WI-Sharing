@@ -1,6 +1,6 @@
 package com.example.tech4good_server.global.security;
 
-import com.example.tech4good_server.global.model.entity.USER_INFO;
+import com.example.tech4good_server.global.model.entity.UserInfo;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -11,11 +11,11 @@ import static com.example.tech4good_server.global.constants.AuthConstants.ANONYM
 
 public class LoginManager {
 
-    public static USER_INFO getUserDetails() {
-        USER_INFO userDetails;
+    public static UserInfo getUserDetails() {
+        UserInfo userDetails;
 
         try {
-            userDetails = (USER_INFO) getDetails();
+            userDetails = (UserInfo) getDetails();
         } catch (Exception e) {
             return null;
         }

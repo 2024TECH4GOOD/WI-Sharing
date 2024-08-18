@@ -1,14 +1,12 @@
 package com.example.tech4good_server.global.model.entity;
 
-import com.example.tech4good_server.global.constants.MongoField;
 import com.example.tech4good_server.global.model.enums.Role;
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.experimental.SuperBuilder;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.annotation.Transient;
-import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.data.mongodb.core.mapping.Field;
+import org.hibernate.annotations.DynamicUpdate;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -17,16 +15,19 @@ import java.util.Collection;
 import java.util.Date;
 
 @Data
-@Document(collection = "USER_INFO")
-@SuperBuilder
+@Builder
 @NoArgsConstructor
-public class USER_INFO implements UserDetails {
+@AllArgsConstructor
+@DynamicUpdate
+@Entity(name = "USER_INFO")
+public class UserInfo implements UserDetails {
     @Id
-    @Field(MongoField._ID)
-    private String userId;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer userSeq;
 
     // id
     private String id;
+
     // pw
     private String password;
 
@@ -40,11 +41,9 @@ public class USER_INFO implements UserDetails {
     private Date birth;
 
     // 핸드폰 번호
-    @Field(MongoField.PHONE_NUMBER)
     private String phoneNumber;
 
     // 프로필 이미지
-    @Field(MongoField.PROFILE_URL)
     private String profileUrl;
 
     // 자립 준비 청년, 시니어
@@ -54,8 +53,13 @@ public class USER_INFO implements UserDetails {
     private Collection<SimpleGrantedAuthority> authorities;
 
     @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return authorities;
+    }
+
+    @Override
     public String getUsername() {
-        return this.userId;
+        return this.id;
     }
 
     @Override
@@ -78,10 +82,4 @@ public class USER_INFO implements UserDetails {
         return false;
     }
 
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return this.authorities;
-    }
-
 }
-
