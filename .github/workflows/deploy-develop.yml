@@ -51,12 +51,24 @@ jobs:
             script: |
               # Remove old current directory
               sudo rm -rf /home/***/yesable_server/current
+              if [ $? -ne 0 ]; then
+              echo "Failed to remove old current directory"
+              exit 1
+              fi
   
               # Create parent directories if they do not exist, then create the current directory
-              sudo mkdir -p /home/***/yesable_server/current              
-              
+              sudo mkdir -p /home/***/yesable_server/current
+              if [ $? -ne 0 ]; then
+                echo "Failed to create current directory"
+                exit 1
+                fi
+  
               # Move the JAR file to the new current directory
               sudo mv /home/***/yesable_server/tobe/project.jar /home/***/yesable_server/current/project.jar
+              if [ $? -ne 0 ]; then
+                echo "Failed to move project.jar"
+                exit 1
+                fi
   
               # Change to the current directory
               cd /home/***/yesable_server/current
@@ -69,9 +81,17 @@ jobs:
               else
                 echo "No process found on port 9475."
                 fi
-  
+              
               # Start the new server process
               nohup java -jar project.jar --spring.profiles.active=local > ~/yesable_server/logs/server.log 2>&1 &
-  
+              if [ $? -ne 0 ]; then
+                echo "Failed to start server process"
+                exit 1
+                fi
+              
               # Remove old 'tobe' directory
               sudo rm -rf /home/***/yesable_server/tobe
+              if [ $? -ne 0 ]; then
+                echo "Failed to remove old 'tobe' directory"
+                exit 1
+                fi
