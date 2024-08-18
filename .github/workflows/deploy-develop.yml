@@ -53,8 +53,8 @@ jobs:
               rm -rf /home/***/yesable_server/current
   
               # Create parent directories if they do not exist, then create the current directory
-              mkdir -p /home/***/yesable_server/current
-  
+              sudo mkdir -p /home/***/yesable_server/current              
+              
               # Move the JAR file to the new current directory
               mv /home/***/yesable_server/tobe/project.jar /home/***/yesable_server/current/project.jar
   
