@@ -46,6 +46,9 @@ public class UserInfoVo {
     // 관심사
     private String interest;
 
+    // 취미
+    private String hobby;
+
     // 자립 준비 청년, 시니어
     private Role role;
 }
