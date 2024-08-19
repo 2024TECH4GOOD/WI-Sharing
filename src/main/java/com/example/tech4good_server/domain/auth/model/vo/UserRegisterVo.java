@@ -1,4 +1,4 @@
-package com.example.tech4good_server.global.model.vo;
+package com.example.tech4good_server.domain.auth.model.vo;
 
 import com.example.tech4good_server.global.model.enums.Role;
 import lombok.AllArgsConstructor;
@@ -12,9 +12,12 @@ import java.time.LocalDate;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserInfoVo {
+public class UserRegisterVo {
     // id
     private String id;
+
+    // pw
+    private String password;
 
     // 이름
     private String name;

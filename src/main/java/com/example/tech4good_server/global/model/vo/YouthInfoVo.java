@@ -1,23 +1,15 @@
-package com.example.tech4good_server.global.model.entity;
+package com.example.tech4good_server.global.model.vo;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.DynamicUpdate;
 
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@DynamicUpdate
-@Entity(name = "YOUTH_INFO")
-public class YouthInfo {
-    @Id
-    private Integer userSeq;
-
+public class YouthInfoVo {
     // 희망 진로
     private String careerPath;
 
@@ -29,5 +21,4 @@ public class YouthInfo {
 
     // 희망 지역 (동)
     private String district;
-
 }

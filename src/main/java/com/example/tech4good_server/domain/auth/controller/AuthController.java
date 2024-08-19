@@ -45,7 +45,7 @@ public class AuthController {
              중복 아이디가 있는지 체크한다.
              사용 가능하면 true, 중복된 아이디가 있으면 false 반환
             """)
-    @PostMapping("/validate")
+    @GetMapping("/validate")
     public Boolean idValidation(String id) {
         return authService.idValidation(id);
     }

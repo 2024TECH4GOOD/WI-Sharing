@@ -1,23 +1,15 @@
-package com.example.tech4good_server.global.model.entity;
+package com.example.tech4good_server.global.model.vo;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.DynamicUpdate;
 
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@DynamicUpdate
-@Entity(name = "SENIOR_INFO")
-public class SeniorInfo {
-    @Id
-    private Integer userSeq;
-
+public class SeniorInfoVo {
     // 경력 사항
     private String career;
 
@@ -26,5 +18,4 @@ public class SeniorInfo {
 
     // 사전 교육 영상 수료서
     private String educationalCertificate;
-
 }

@@ -1,6 +1,7 @@
 package com.example.tech4good_server.global.model.entity;
 
 import com.example.tech4good_server.global.model.enums.Role;
+import com.example.tech4good_server.global.security.LoginManager;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -11,8 +12,9 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.time.LocalDate;
 import java.util.Collection;
-import java.util.Date;
+import java.util.Objects;
 
 @Data
 @Builder
@@ -37,8 +39,11 @@ public class UserInfo implements UserDetails {
     // 성별
     private String sex;
 
+    // 나이
+    private Integer age;
+
     // 생일
-    private Date birth;
+    private LocalDate birth;
 
     // 핸드폰 번호
     private String phoneNumber;
@@ -46,7 +51,20 @@ public class UserInfo implements UserDetails {
     // 프로필 이미지
     private String profileUrl;
 
+    // 거주지 (시)
+    private String city;
+
+    // 거주지 (동)
+    private String district;
+
+    // 성격
+    private String personality;
+
+    // 관심사
+    private String interest;
+
     // 자립 준비 청년, 시니어
+    @Enumerated(value = EnumType.STRING)
     private Role role;
 
     @Transient
@@ -80,6 +98,15 @@ public class UserInfo implements UserDetails {
     @Override
     public boolean isEnabled() {
         return false;
+    }
+
+    public UserInfo updateUserInfo(UserInfo userInfo){
+        Integer loginUserSeq = Objects.requireNonNull(LoginManager.getUserDetails()).getUserSeq();
+
+        userInfo.setUserSeq(loginUserSeq);
+        userInfo.setPassword(LoginManager.getUserDetails().getPassword());
+
+        return userInfo;
     }
 
 }

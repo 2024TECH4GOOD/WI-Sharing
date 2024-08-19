@@ -1,17 +1,17 @@
-package com.example.tech4good_server.domain.auth.model.request;
+package com.example.tech4good_server.domain.mypage.model.request;
 
-import com.example.tech4good_server.domain.auth.model.vo.UserRegisterVo;
 import com.example.tech4good_server.global.model.vo.SeniorInfoVo;
+import com.example.tech4good_server.global.model.vo.UserInfoVo;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Getter;
+import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Getter
+@Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class SeniorRegisterRequest {
-    UserRegisterVo userInfo;
+public class SeniorOnboardingRequest {
+    UserInfoVo userInfo;
     SeniorInfoVo seniorInfo;
 }

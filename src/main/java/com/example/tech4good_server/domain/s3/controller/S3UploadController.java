@@ -23,7 +23,7 @@ public class S3UploadController {
     private final UploadExecutor uploadExecutor;
 
     /**
-     * 로그인 Controller
+     * S3 png 업로드 Controller
      */
     @Operation(summary = "png 업로드", description = """
              이미지를 s3에 업로드한다.
@@ -33,5 +33,15 @@ public class S3UploadController {
         return uploadExecutor.pngFileUpload(file);
     }
 
+    /**
+     * S3 pdf 업로드 Controller
+     */
+    @Operation(summary = "pdf 업로드", description = """
+             pdf 파일을 s3에 업로드한다.
+            """)
+    @PostMapping(value="/pdf", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
+    public String pdfUpload(@RequestPart(value = "file", required = false) MultipartFile file) throws IOException {
+        return uploadExecutor.pdfFileUpload(file);
+    }
 
 }
