@@ -6,14 +6,11 @@ import com.example.tech4good_server.domain.mypage.model.request.SeniorOnboarding
 import com.example.tech4good_server.domain.mypage.model.request.YouthOnboardingRequest;
 import com.example.tech4good_server.domain.mypage.model.response.*;
 import com.example.tech4good_server.domain.mypage.repository.SeniorInfoRepository;
-import com.example.tech4good_server.domain.mypage.repository.YouthInfoRepository;
 import com.example.tech4good_server.global.mapper.SeniorInfoMapper;
 import com.example.tech4good_server.global.mapper.UserInfoMapper;
 import com.example.tech4good_server.global.mapper.UserProfileMapper;
-import com.example.tech4good_server.global.mapper.YouthInfoMapper;
 import com.example.tech4good_server.global.model.entity.SeniorInfo;
 import com.example.tech4good_server.global.model.entity.UserInfo;
-import com.example.tech4good_server.global.model.entity.YouthInfo;
 import com.example.tech4good_server.global.security.LoginManager;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -26,10 +23,8 @@ import java.util.Objects;
 @RequiredArgsConstructor
 public class MyPageService {
     private final SeniorInfoRepository seniorInfoRepository;
-    private final YouthInfoRepository youthInfoRepository;
     private final UserRepository userRepository;
     private final UserInfoMapper userInfoMapper;
-    private final YouthInfoMapper youthInfoMapper;
     private final SeniorInfoMapper seniorInfoMapper;
     private final UserProfileMapper userProfileMapper;
     private final AuthDelegate authDelegate;
@@ -72,10 +67,6 @@ public class MyPageService {
         UserInfo userInfo = LoginManager.getUserDetails();
         youthMyInfoResponse.setUserInfo(userInfoMapper.toDto(userInfo));
 
-        assert userInfo != null;
-        YouthInfo youthInfo = youthInfoRepository.findByUserSeq(userInfo.getUserSeq());
-        youthMyInfoResponse.setYouthInfo(youthInfoMapper.toDto(youthInfo));
-
         return youthMyInfoResponse;
     }
 
@@ -84,17 +75,11 @@ public class MyPageService {
      */
     public YouthOnboardingResponse youthOnboarding(YouthOnboardingRequest request){
         YouthOnboardingResponse youthOnboardingResponse = new YouthOnboardingResponse();
-        Integer loginUserSeq = Objects.requireNonNull(LoginManager.getUserDetails()).getUserSeq();
 
         UserInfo userInfo = userInfoMapper.toEntity(request.getUserInfo());
         userInfo.updateUserInfo(userInfo);
         userRepository.save(userInfo);
         youthOnboardingResponse.setUserInfo(userInfoMapper.toDto(userInfo));
-
-        YouthInfo youthInfo = youthInfoMapper.toEntity(request.getYouthInfo());
-        youthInfo.setUserSeq(loginUserSeq);
-        youthInfoRepository.save(youthInfo);
-        youthOnboardingResponse.setYouthInfo(youthInfoMapper.toDto(youthInfo));
 
         return youthOnboardingResponse;
     }

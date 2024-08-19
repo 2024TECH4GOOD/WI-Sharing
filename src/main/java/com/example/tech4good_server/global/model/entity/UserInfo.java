@@ -63,6 +63,12 @@ public class UserInfo implements UserDetails {
     // 관심사
     private String interest;
 
+    // 희망 진로 (청년), 경력 사항 (시니어)
+    private String career;
+
+    // 취미
+    private String hobby;
+
     // 자립 준비 청년, 시니어
     @Enumerated(value = EnumType.STRING)
     private Role role;
@@ -100,13 +106,12 @@ public class UserInfo implements UserDetails {
         return false;
     }
 
-    public UserInfo updateUserInfo(UserInfo userInfo){
+    public void updateUserInfo(UserInfo userInfo){
         Integer loginUserSeq = Objects.requireNonNull(LoginManager.getUserDetails()).getUserSeq();
 
         userInfo.setUserSeq(loginUserSeq);
         userInfo.setPassword(LoginManager.getUserDetails().getPassword());
 
-        return userInfo;
     }
 
 }

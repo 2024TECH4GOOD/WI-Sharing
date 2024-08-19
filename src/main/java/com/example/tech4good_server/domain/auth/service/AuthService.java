@@ -2,7 +2,6 @@ package com.example.tech4good_server.domain.auth.service;
 
 import com.example.tech4good_server.domain.auth.mapper.UserRegisterMapper;
 import com.example.tech4good_server.domain.mypage.repository.SeniorInfoRepository;
-import com.example.tech4good_server.domain.mypage.repository.YouthInfoRepository;
 import com.example.tech4good_server.global.mapper.SeniorInfoMapper;
 import com.example.tech4good_server.domain.auth.model.request.SeniorRegisterRequest;
 import com.example.tech4good_server.domain.auth.model.request.YouthRegisterRequest;
@@ -10,11 +9,9 @@ import com.example.tech4good_server.domain.auth.model.request.LoginRequest;
 import com.example.tech4good_server.domain.auth.model.response.TokenResponse;
 import com.example.tech4good_server.domain.auth.repository.RefreshTokenRepository;
 import com.example.tech4good_server.domain.auth.repository.UserRepository;
-import com.example.tech4good_server.global.mapper.YouthInfoMapper;
 import com.example.tech4good_server.global.model.entity.RefreshToken;
 import com.example.tech4good_server.global.model.entity.SeniorInfo;
 import com.example.tech4good_server.global.model.entity.UserInfo;
-import com.example.tech4good_server.global.model.entity.YouthInfo;
 import com.example.tech4good_server.global.security.JwtTokenProvider;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -37,12 +34,10 @@ public class AuthService {
 
     private final UserRepository userRepository;
     private final RefreshTokenRepository userTokenRepository;
-    private final YouthInfoRepository youthInfoRepository;
     private final SeniorInfoRepository seniorInfoRepository;
     private final JwtTokenProvider jwtTokenProvider;
     private final UserRegisterMapper userRegisterMapper;
     private final SeniorInfoMapper seniorInfoMapper;
-    private final YouthInfoMapper youthInfoMapper;
     private final PasswordEncoder passwordEncoder;
     private final AuthDelegate authDelegate;
 
@@ -63,10 +58,6 @@ public class AuthService {
     public TokenResponse youthRegister(HttpServletResponse response, YouthRegisterRequest request) {
         request.getUserInfo().setPassword(authDelegate.passwordEncoding(request.getUserInfo().getPassword()));
         UserInfo userInfo = userRepository.save(userRegisterMapper.toEntity(request.getUserInfo()));
-
-        YouthInfo youthInfo = youthInfoMapper.toEntity(request.getYouthInfo());
-        youthInfo.setUserSeq(userInfo.getUserSeq());
-        youthInfoRepository.save(youthInfo);
 
         return this.makeToken(response, userInfo);
     }

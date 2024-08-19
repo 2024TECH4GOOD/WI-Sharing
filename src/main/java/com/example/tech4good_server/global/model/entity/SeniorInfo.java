@@ -18,9 +18,6 @@ public class SeniorInfo {
     @Id
     private Integer userSeq;
 
-    // 경력 사항
-    private String career;
-
     // 범죄 경력 확인 동의서
     private String criminalRecordCheck;
 
