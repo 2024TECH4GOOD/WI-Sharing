@@ -1,6 +1,7 @@
 package com.example.tech4good_server.domain.mypage.service;
 
 import com.example.tech4good_server.domain.auth.repository.UserRepository;
+import com.example.tech4good_server.domain.auth.service.AuthDelegate;
 import com.example.tech4good_server.domain.mypage.model.request.SeniorOnboardingRequest;
 import com.example.tech4good_server.domain.mypage.model.request.YouthOnboardingRequest;
 import com.example.tech4good_server.domain.mypage.model.response.*;
@@ -31,6 +32,7 @@ public class MyPageService {
     private final YouthInfoMapper youthInfoMapper;
     private final SeniorInfoMapper seniorInfoMapper;
     private final UserProfileMapper userProfileMapper;
+    private final AuthDelegate authDelegate;
 
     /**
      * BOTH
@@ -45,6 +47,17 @@ public class MyPageService {
         UserInfo userInfo = LoginManager.getUserDetails();
         userProfileResponse.setUserProfileVo(userProfileMapper.toDto(userInfo));
         return userProfileResponse;
+    }
+
+    /**
+     * 비밀번호 변경
+     */
+    public void updatePassword(String password){
+        UserInfo userInfo = LoginManager.getUserDetails();
+
+        assert userInfo != null;
+        userInfo.setPassword(authDelegate.passwordEncoding(password));
+        userRepository.save(userInfo);
     }
 
     /**

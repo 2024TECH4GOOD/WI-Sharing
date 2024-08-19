@@ -5,7 +5,9 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestPart;
@@ -29,8 +31,8 @@ public class S3UploadController {
              이미지를 s3에 업로드한다.
             """)
     @PostMapping(value="/png", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
-    public String pngUpload(@RequestPart(value = "file", required = false) MultipartFile file) throws IOException {
-        return uploadExecutor.pngFileUpload(file);
+    public ResponseEntity<String> pngUpload(@RequestPart(value = "file", required = false) MultipartFile file) throws IOException {
+        return new ResponseEntity<>(uploadExecutor.pngFileUpload(file), HttpStatus.OK);
     }
 
     /**
@@ -40,8 +42,8 @@ public class S3UploadController {
              pdf 파일을 s3에 업로드한다.
             """)
     @PostMapping(value="/pdf", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
-    public String pdfUpload(@RequestPart(value = "file", required = false) MultipartFile file) throws IOException {
-        return uploadExecutor.pdfFileUpload(file);
+    public ResponseEntity<String> pdfUpload(@RequestPart(value = "file", required = false) MultipartFile file) throws IOException {
+        return new ResponseEntity<>(uploadExecutor.pdfFileUpload(file), HttpStatus.OK);
     }
 
 }

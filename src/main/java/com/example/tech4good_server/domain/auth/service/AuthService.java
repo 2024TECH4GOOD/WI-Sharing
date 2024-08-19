@@ -44,6 +44,7 @@ public class AuthService {
     private final SeniorInfoMapper seniorInfoMapper;
     private final YouthInfoMapper youthInfoMapper;
     private final PasswordEncoder passwordEncoder;
+    private final AuthDelegate authDelegate;
 
     /**
      * 로그인
@@ -60,7 +61,7 @@ public class AuthService {
      * 청년 회원 가입 요청
      */
     public TokenResponse youthRegister(HttpServletResponse response, YouthRegisterRequest request) {
-        request.getUserInfo().setPassword(this.passwordEncoding(request.getUserInfo().getPassword()));
+        request.getUserInfo().setPassword(authDelegate.passwordEncoding(request.getUserInfo().getPassword()));
         UserInfo userInfo = userRepository.save(userRegisterMapper.toEntity(request.getUserInfo()));
 
         YouthInfo youthInfo = youthInfoMapper.toEntity(request.getYouthInfo());
@@ -74,7 +75,7 @@ public class AuthService {
      * 시니어 회원 가입 요청
      */
     public TokenResponse seniorRegister(HttpServletResponse response, SeniorRegisterRequest request) {
-        request.getUserInfo().setPassword(this.passwordEncoding(request.getUserInfo().getPassword()));
+        request.getUserInfo().setPassword(authDelegate.passwordEncoding(request.getUserInfo().getPassword()));
         UserInfo userInfo = userRepository.save(userRegisterMapper.toEntity(request.getUserInfo()));
 
         SeniorInfo seniorInfo = seniorInfoMapper.toEntity(request.getSeniorInfo());
@@ -118,13 +119,4 @@ public class AuthService {
                 .accessToken(accessToken)
                 .build();
     }
-
-    /**
-     * private (내부 사용)
-     * 비밀번호 인코딩
-     */
-    private String passwordEncoding(String pw){
-        return passwordEncoder.encode(pw);
-    }
-
 }

@@ -9,6 +9,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
@@ -18,6 +19,7 @@ import java.util.Collections;
 @RequiredArgsConstructor
 public class AuthDelegate implements UserDetailsService {
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
     @Override
     public UserDetails loadUserByUsername(String userId) throws UsernameNotFoundException {
@@ -27,5 +29,14 @@ public class AuthDelegate implements UserDetailsService {
 
         return userInfo;
     }
+
+    /**
+     * private (내부 사용)
+     * 비밀번호 인코딩
+     */
+    public String passwordEncoding(String pw){
+        return passwordEncoder.encode(pw);
+    }
+
 }
 

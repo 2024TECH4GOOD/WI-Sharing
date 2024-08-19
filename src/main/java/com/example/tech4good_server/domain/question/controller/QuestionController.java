@@ -11,6 +11,8 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -33,8 +35,8 @@ public class QuestionController {
              로그인 한 자립 준비 청년 질문 올리기
             """)
     @PostMapping("")
-    public QuestionResponse question(@RequestBody QuestionRequest questionRequest) {
-        return questionService.question(questionRequest);
+    public ResponseEntity<QuestionResponse> question(@RequestBody QuestionRequest questionRequest) {
+        return new ResponseEntity<>(questionService.question(questionRequest), HttpStatus.OK);
     }
 
     /**
@@ -44,8 +46,8 @@ public class QuestionController {
              질문과 질문에 대한 답변 List 조회
             """)
     @GetMapping("/{questionSeq}")
-    public QuestionDetailResponse getQuestionDetail(@PathVariable("questionSeq") Integer questionSeq){
-        return questionService.getQuestionDetail(questionSeq);
+    public  ResponseEntity<QuestionDetailResponse> getQuestionDetail(@PathVariable("questionSeq") Integer questionSeq){
+        return new ResponseEntity<>(questionService.getQuestionDetail(questionSeq), HttpStatus.OK);
     }
 
     /**
@@ -55,8 +57,8 @@ public class QuestionController {
              질문 List 조회
             """)
     @GetMapping("/list")
-    public QuestionListResponse getQuestionList(@Valid QuestionSearchRequest questionSearchRequest){
-        return questionService.getQuestionList(questionSearchRequest);
+    public ResponseEntity<QuestionListResponse> getQuestionList(@Valid QuestionSearchRequest questionSearchRequest){
+        return new ResponseEntity<>(questionService.getQuestionList(questionSearchRequest), HttpStatus.OK);
     }
 
 }

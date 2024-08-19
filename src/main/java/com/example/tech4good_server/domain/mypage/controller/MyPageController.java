@@ -1,5 +1,6 @@
 package com.example.tech4good_server.domain.mypage.controller;
 
+import com.example.tech4good_server.domain.mypage.model.request.PwRequest;
 import com.example.tech4good_server.domain.mypage.model.request.SeniorOnboardingRequest;
 import com.example.tech4good_server.domain.mypage.model.request.YouthOnboardingRequest;
 import com.example.tech4good_server.domain.mypage.model.response.*;
@@ -8,6 +9,8 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -30,8 +33,20 @@ public class MyPageController {
              로그인 한 사용자의 프로필 정보 조회 (자립준비청년, 시니어 공통 사용)
             """)
     @GetMapping("/profile")
-    public UserProfileResponse profileInfo(){
-        return myPageService.profileInfo();
+    public ResponseEntity<UserProfileResponse> profileInfo(){
+        return new ResponseEntity<>(myPageService.profileInfo(), HttpStatus.OK);
+    }
+
+    /**
+     * 비밀번호 변경
+     */
+    @Operation(summary = "비밀번호 변경", description = """
+             로그인한 사용자의 비밀번호 변경
+            """)
+    @PostMapping("/update")
+    public ResponseEntity<Void> updatePassword(@RequestBody PwRequest request) {
+        myPageService.updatePassword(request.getPassword());
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     /**
@@ -41,8 +56,8 @@ public class MyPageController {
              로그인 한 자립 준비 청년의 정보 확인
             """)
     @GetMapping("/youth/info")
-    public YouthMyInfoResponse youthMyInfo() {
-        return myPageService.youthMyInfo();
+    public ResponseEntity<YouthMyInfoResponse> youthMyInfo() {
+        return new ResponseEntity<>(myPageService.youthMyInfo(), HttpStatus.OK);
     }
 
     /**
@@ -52,8 +67,8 @@ public class MyPageController {
              로그인 한 자립 준비 청년 온보딩 다시 하기
             """)
     @PutMapping("/youth/onboarding")
-    public YouthOnboardingResponse youthOnboarding(@RequestBody YouthOnboardingRequest request) {
-        return myPageService.youthOnboarding(request);
+    public ResponseEntity<YouthOnboardingResponse> youthOnboarding(@RequestBody YouthOnboardingRequest request) {
+        return new ResponseEntity<>(myPageService.youthOnboarding(request), HttpStatus.OK);
     }
 
     /**
@@ -63,8 +78,8 @@ public class MyPageController {
              로그인 한 시니어의 정보 확인
             """)
     @GetMapping("/senior/info")
-    public SeniorMyInfoResponse seniorMyInfo() {
-        return myPageService.seniorMyInfo();
+    public ResponseEntity<SeniorMyInfoResponse> seniorMyInfo() {
+        return new ResponseEntity<>(myPageService.seniorMyInfo(), HttpStatus.OK);
     }
 
     /**
@@ -74,8 +89,8 @@ public class MyPageController {
              로그인 한 시니어 온보딩 다시 하기
             """)
     @PutMapping("/senior/onboarding")
-    public SeniorOnboardingResponse youthOnboarding(@RequestBody SeniorOnboardingRequest request) {
-        return myPageService.seniorOnboarding(request);
+    public ResponseEntity<SeniorOnboardingResponse> youthOnboarding(@RequestBody SeniorOnboardingRequest request) {
+        return new ResponseEntity<>(myPageService.seniorOnboarding(request), HttpStatus.OK);
     }
 
 }

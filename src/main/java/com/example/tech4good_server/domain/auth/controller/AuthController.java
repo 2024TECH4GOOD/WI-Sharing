@@ -11,6 +11,8 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -34,8 +36,8 @@ public class AuthController {
              아이디, 비밀번호로 로그인 한다.
             """)
     @PostMapping("/login")
-    public TokenResponse doLogin(HttpServletResponse response, LoginRequest loginRequest) {
-        return authService.login(response, loginRequest);
+    public ResponseEntity<TokenResponse> doLogin(HttpServletResponse response, LoginRequest loginRequest) {
+        return new ResponseEntity<>(authService.login(response, loginRequest), HttpStatus.OK);
     }
 
     /**
@@ -46,9 +48,10 @@ public class AuthController {
              사용 가능하면 true, 중복된 아이디가 있으면 false 반환
             """)
     @GetMapping("/validate")
-    public Boolean idValidation(String id) {
-        return authService.idValidation(id);
+    public ResponseEntity<Boolean> idValidation(String id) {
+        return new ResponseEntity<>(authService.idValidation(id), HttpStatus.OK);
     }
+
 
     /**
      * 청년 회원 가입 요청 Controller
@@ -57,8 +60,8 @@ public class AuthController {
              청년 회원 가입 한다.
             """)
     @PostMapping("/register/youth")
-    public TokenResponse youthRegister(HttpServletResponse response, @RequestBody YouthRegisterRequest youthRegisterRequest) {
-        return authService.youthRegister(response, youthRegisterRequest);
+    public  ResponseEntity<TokenResponse> youthRegister(HttpServletResponse response, @RequestBody YouthRegisterRequest youthRegisterRequest) {
+        return  new ResponseEntity<>(authService.youthRegister(response, youthRegisterRequest), HttpStatus.OK);
     }
 
     /**
@@ -68,8 +71,8 @@ public class AuthController {
              시니어 회원 가입 한다.
             """)
     @PostMapping("/register/senior")
-    public TokenResponse farmerRegister(HttpServletResponse response, @RequestBody SeniorRegisterRequest seniorRegisterRequest) {
-        return authService.seniorRegister(response, seniorRegisterRequest);
+    public ResponseEntity<TokenResponse> farmerRegister(HttpServletResponse response, @RequestBody SeniorRegisterRequest seniorRegisterRequest) {
+        return new ResponseEntity<>(authService.seniorRegister(response, seniorRegisterRequest), HttpStatus.OK);
 
     }
 
