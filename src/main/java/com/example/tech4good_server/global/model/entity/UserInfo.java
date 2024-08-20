@@ -51,11 +51,8 @@ public class UserInfo implements UserDetails {
     // 프로필 이미지
     private String profileUrl;
 
-    // 거주지 (시)
-    private String city;
-
-    // 거주지 (동)
-    private String district;
+    // 거주지
+    private String location;
 
     // 성격
     private String personality;

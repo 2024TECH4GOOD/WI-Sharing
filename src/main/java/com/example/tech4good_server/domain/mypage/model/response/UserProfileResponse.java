@@ -5,5 +5,5 @@ import lombok.Data;
 
 @Data
 public class UserProfileResponse {
-    private UserProfileVo userProfileVo;
+    private UserProfileVo userProfile;
 }

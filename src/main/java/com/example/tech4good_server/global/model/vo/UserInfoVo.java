@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Data
 @Builder
@@ -35,19 +36,19 @@ public class UserInfoVo {
     private String profileUrl;
 
     // 거주지 (시)
-    private String city;
+    private String location;
 
-    // 거주지 (동)
-    private String district;
+    // 희망 직업
+    private String career;
 
     // 성격
-    private String personality;
+    private List<String> personality;
 
     // 관심사
-    private String interest;
+    private List<String> interest;
 
     // 취미
-    private String hobby;
+    private List<String> hobby;
 
     // 자립 준비 청년, 시니어
     private Role role;

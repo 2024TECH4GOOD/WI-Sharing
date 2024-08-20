@@ -1,6 +1,6 @@
 package com.example.tech4good_server.domain.question.service;
 
-import com.example.tech4good_server.domain.ai.service.AIService;
+import com.example.tech4good_server.global.component.ai.AIComponent;
 import com.example.tech4good_server.domain.auth.repository.UserRepository;
 import com.example.tech4good_server.domain.question.mapper.QuestionRequestMapper;
 import com.example.tech4good_server.domain.question.model.request.QuestionRequest;
@@ -41,7 +41,7 @@ public class QuestionService {
     private final UserRepository userRepository;
     private final UserQueryRepository userQueryRepository;
     private final QuestionQueryRepository questionQueryRepository;
-    private final AIService aiService;
+    private final AIComponent aiComponent;
 
 
     public QuestionResponse question(QuestionRequest request) throws JsonProcessingException {
@@ -49,7 +49,7 @@ public class QuestionService {
         Question questionRequestMapperEntity = questionRequestMapper.toEntity(request);
         Question question = questionRepository.save(questionRequestMapperEntity);
 
-        aiService.sendQuestionToAI(question);
+        aiComponent.sendQuestionToAI(question);
 
         QuestionVo questionVo = questionMapper.toDto(question);
         questionVo.setName(Objects.requireNonNull(LoginManager.getUserDetails()).getName());

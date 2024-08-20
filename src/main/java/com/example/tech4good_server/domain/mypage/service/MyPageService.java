@@ -40,7 +40,7 @@ public class MyPageService {
         UserProfileResponse userProfileResponse = new UserProfileResponse();
 
         UserInfo userInfo = LoginManager.getUserDetails();
-        userProfileResponse.setUserProfileVo(userProfileMapper.toDto(userInfo));
+        userProfileResponse.setUserProfile(userProfileMapper.toDto(userInfo));
         return userProfileResponse;
     }
 

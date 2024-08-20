@@ -1,4 +1,4 @@
-package com.example.tech4good_server.domain.ai.service;
+package com.example.tech4good_server.global.component.ai;
 
 import com.example.tech4good_server.domain.question.repository.AnswerRepository;
 import com.example.tech4good_server.global.model.entity.Answer;
@@ -12,7 +12,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.Async;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.HashMap;
@@ -20,9 +20,9 @@ import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 
 @Slf4j
-@Service
 @RequiredArgsConstructor
-public class AIService {
+@Component
+public class AIComponent {
     private final AnswerRepository answerRepository;
     private final ObjectMapper objectMapper;
 
