@@ -36,7 +36,7 @@ public class AuthController {
              아이디, 비밀번호로 로그인 한다.
             """)
     @PostMapping("/login")
-    public ResponseEntity<TokenResponse> doLogin(HttpServletResponse response, LoginRequest loginRequest) {
+    public ResponseEntity<TokenResponse> doLogin(HttpServletResponse response, @RequestBody LoginRequest loginRequest) {
         return new ResponseEntity<>(authService.login(response, loginRequest), HttpStatus.OK);
     }
 

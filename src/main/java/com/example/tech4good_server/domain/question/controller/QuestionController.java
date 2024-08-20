@@ -6,6 +6,7 @@ import com.example.tech4good_server.domain.question.model.response.QuestionDetai
 import com.example.tech4good_server.domain.question.model.response.QuestionListResponse;
 import com.example.tech4good_server.domain.question.model.response.QuestionResponse;
 import com.example.tech4good_server.domain.question.service.QuestionService;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
@@ -35,7 +36,7 @@ public class QuestionController {
              로그인 한 자립 준비 청년 질문 올리기
             """)
     @PostMapping("")
-    public ResponseEntity<QuestionResponse> question(@RequestBody QuestionRequest questionRequest) {
+    public ResponseEntity<QuestionResponse> question(@RequestBody QuestionRequest questionRequest) throws JsonProcessingException {
         return new ResponseEntity<>(questionService.question(questionRequest), HttpStatus.OK);
     }
 

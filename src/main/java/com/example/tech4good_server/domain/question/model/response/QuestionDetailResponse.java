@@ -15,5 +15,5 @@ import java.util.List;
 @AllArgsConstructor
 public class QuestionDetailResponse {
     QuestionVo question;
-    List<AnswerVo> answerVo;
+    List<AnswerVo> answerList;
 }

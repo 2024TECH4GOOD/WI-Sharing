@@ -36,7 +36,8 @@ public class Answer {
 
     @PrePersist
     public void prePersist(){
-        this.userSeq = Objects.requireNonNull(LoginManager.getUserDetails()).getUserSeq();
+        if(userSeq != 0)
+            this.userSeq = Objects.requireNonNull(LoginManager.getUserDetails()).getUserSeq();
         this.createdAt = LocalDateTime.now();
     }
 

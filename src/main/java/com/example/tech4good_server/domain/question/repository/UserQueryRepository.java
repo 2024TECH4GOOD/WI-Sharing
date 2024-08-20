@@ -19,7 +19,8 @@ public class UserQueryRepository {
         return queryFactory.from(userInfo)
                 .select(Projections.constructor(UserProfileVo.class,
                         userInfo.userSeq,
-                        userInfo.name
+                        userInfo.name,
+                        userInfo.profileUrl
                 ))
                 .from(userInfo)
                 .where(userInfo.userSeq.in(userSeqs))

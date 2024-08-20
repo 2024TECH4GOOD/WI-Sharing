@@ -1,5 +1,6 @@
 package com.example.tech4good_server.domain.question.service;
 
+import com.example.tech4good_server.domain.ai.service.AIService;
 import com.example.tech4good_server.domain.auth.repository.UserRepository;
 import com.example.tech4good_server.domain.question.mapper.QuestionRequestMapper;
 import com.example.tech4good_server.domain.question.model.request.QuestionRequest;
@@ -19,6 +20,7 @@ import com.example.tech4good_server.global.model.vo.AnswerVo;
 import com.example.tech4good_server.global.model.vo.QuestionVo;
 import com.example.tech4good_server.global.model.vo.UserProfileVo;
 import com.example.tech4good_server.global.security.LoginManager;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -39,13 +41,15 @@ public class QuestionService {
     private final UserRepository userRepository;
     private final UserQueryRepository userQueryRepository;
     private final QuestionQueryRepository questionQueryRepository;
+    private final AIService aiService;
 
-    public QuestionResponse question(QuestionRequest request) {
+
+    public QuestionResponse question(QuestionRequest request) throws JsonProcessingException {
         QuestionResponse questionResponse = new QuestionResponse();
         Question questionRequestMapperEntity = questionRequestMapper.toEntity(request);
         Question question = questionRepository.save(questionRequestMapperEntity);
 
-        // TODO : AI 답변 생성 요청 처리
+        aiService.sendQuestionToAI(question);
 
         QuestionVo questionVo = questionMapper.toDto(question);
         questionVo.setName(Objects.requireNonNull(LoginManager.getUserDetails()).getName());
@@ -81,9 +85,12 @@ public class QuestionService {
         List<AnswerVo> answerVoList = answerMapper.toDto(answerList);
         answerVoList.forEach(answerVo -> userProfileVos.stream().filter(userProfileVo -> answerVo.getUserSeq().equals(userProfileVo.getUserSeq()))
                 .forEach(userProfileVo -> answerVo.setName(userProfileVo.getName())));
+        answerVoList.stream().filter(answerVo -> answerVo.getUserSeq().equals(0))
+                        .forEach(answerVo -> answerVo.setName("AI 챗봇"));
 
-        questionDetailResponse.setAnswerVo(answerVoList);
+        questionDetailResponse.setAnswerList(answerVoList);
 
         return questionDetailResponse;
     }
+
 }
