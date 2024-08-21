@@ -51,6 +51,9 @@ public class UserInfo implements UserDetails {
     // 프로필 이미지
     private String profileUrl;
 
+    // 멘토링 계약서
+    private String mentoringAgreement;
+
     // 거주지
     private String location;
 
