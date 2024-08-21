@@ -22,7 +22,8 @@ public class WebConfig implements WebMvcConfigurer {
         // TODO Domain 확정 나면 추가
         corsRegistry.addMapping("/**")
                 .allowedOrigins("http://localhost:3000","https://localhost:3000",
-                        "http://localhost:80","https://localhost:80")
+                        "http://localhost:80","https://localhost:80",
+                        "https://wi-sharing-client.vercel.app", "http://wi-sharing-client.vercel.app")
                 .allowedMethods("*")
                 .allowedHeaders("*")
                 .maxAge(3600L)
