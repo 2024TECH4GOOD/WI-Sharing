@@ -41,6 +41,10 @@ public class MyPageService {
 
         UserInfo userInfo = LoginManager.getUserDetails();
         userProfileResponse.setUserProfile(userProfileMapper.toDto(userInfo));
+
+        if (userInfo != null)
+            userProfileResponse.setMentoringAgreement(userInfo.getMentoringAgreement());
+
         return userProfileResponse;
     }
 

@@ -6,4 +6,5 @@ import lombok.Data;
 @Data
 public class UserProfileResponse {
     private UserProfileVo userProfile;
+    private String mentoringAgreement;
 }
