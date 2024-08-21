@@ -19,7 +19,6 @@ public class WebConfig implements WebMvcConfigurer {
     @Override
     public void addCorsMappings(CorsRegistry corsRegistry) {
 
-        // TODO Domain 확정 나면 추가
         corsRegistry.addMapping("/**")
                 .allowedOrigins("http://localhost:3000","https://localhost:3000",
                         "http://localhost:80","https://localhost:80",
