@@ -9,6 +9,7 @@ import com.example.tech4good_server.global.model.entity.UserInfo;
 import com.example.tech4good_server.global.model.vo.MentorInfoVo;
 import com.example.tech4good_server.global.security.LoginManager;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -21,9 +22,7 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 import java.util.concurrent.CompletableFuture;
 
 @Slf4j
@@ -70,32 +69,42 @@ public class AIComponent {
         return CompletableFuture.completedFuture(null);
     }
 
-    public MentorInfoVo getMatchedMentor(Integer concept) throws JsonProcessingException {
-            Integer userSeq = Objects.requireNonNull(LoginManager.getUserDetails()).getUserSeq();
-            RestTemplate restTemplate = new RestTemplate();
-            HttpHeaders httpHeaders = new HttpHeaders();
-            httpHeaders.setContentType(MediaType.APPLICATION_JSON);
+    public List<MentorInfoVo> getMatchedMentor(Integer concept) throws JsonProcessingException {
+        Integer userSeq = Objects.requireNonNull(LoginManager.getUserDetails()).getUserSeq();
+        RestTemplate restTemplate = new RestTemplate();
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.setContentType(MediaType.APPLICATION_JSON);
 
-            Map<String, Integer> body = new HashMap<>();
-            body.put("user_seq", userSeq);
-            body.put("concepts", concept);
+        // 요청 바디 설정
+        Map<String, Integer> body = new HashMap<>();
+        body.put("user_seq", userSeq);
+        body.put("concepts", concept);
 
-            HttpEntity<Map<String, Integer>> requestMessage = new HttpEntity<>(body, httpHeaders);
-            ResponseEntity<String> response = restTemplate.postForEntity(match_url, requestMessage, String.class);
+        HttpEntity<Map<String, Integer>> requestMessage = new HttpEntity<>(body, httpHeaders);
+        ResponseEntity<String> response = restTemplate.postForEntity(match_url, requestMessage, String.class);
 
-            Map<String, String> responseBody = objectMapper.readValue(response.getBody(), Map.class);
+        List<Map<String, String>> responseBodyList = objectMapper.readValue(response.getBody(), new TypeReference<List<Map<String, String>>>() {});
+
+        List<MentorInfoVo> mentorInfoVoList = new ArrayList<>();
+
+        for (Map<String, String> responseBody : responseBodyList) {
             String matchedUserSeq = responseBody.get("user_seq");
             String similaritySum = responseBody.get("similarity_sum");
 
             UserInfo userInfo = userRepository.findUserInfoByUserSeq(Integer.valueOf(matchedUserSeq));
 
-            return MentorInfoVo.builder()
+            MentorInfoVo mentorInfoVo = MentorInfoVo.builder()
                     .name(userInfo.getName())
                     .career(userInfo.getCareer())
                     .personality(dataProcessComponent.addHashToEachWord(userInfo.getPersonality()))
                     .similaritySum(similaritySum)
                     .build();
 
+            mentorInfoVoList.add(mentorInfoVo);
+        }
+
+        return mentorInfoVoList;
     }
+
 }
 
