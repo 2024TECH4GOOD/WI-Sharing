@@ -22,6 +22,7 @@ public class WebConfig implements WebMvcConfigurer {
         corsRegistry.addMapping("/**")
                 .allowedOrigins("http://localhost:3000","https://localhost:3000",
                         "http://localhost:80","https://localhost:80",
+                        "https://wi-sharing-client.vercel.app/", "http://wi-sharing-client.vercel.app/",
                         "https://wi-sharing-client.vercel.app", "http://wi-sharing-client.vercel.app")
                 .allowedMethods("*")
                 .allowedHeaders("*")
