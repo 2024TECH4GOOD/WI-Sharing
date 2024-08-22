@@ -26,7 +26,7 @@ public class SecurityConfig {
     @Order(1)
     public WebSecurityCustomizer webSecurityCustomizer(){
         return web -> web.ignoring()
-                .requestMatchers("/api/auth/**", "/swagger-ui/**", "/swagger/**", "/swagger-resources/**", "/swagger-ui.html",
+                .requestMatchers("/healthcheck","/api/auth/**", "/swagger-ui/**", "/swagger/**", "/swagger-resources/**", "/swagger-ui.html",
                         "/v3/api-docs/**", "/css/**", "/js/**", "/img/**", "/lib/**",
                         "/configuration/ui", "/configuration/security", "/webjars/**", "/api/auth/**");
     }
