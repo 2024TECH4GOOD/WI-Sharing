@@ -1,0 +1,74 @@
+.container {
+  border-radius: 16px;
+  border: 0.5px solid #c5c6cc;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  cursor: pointer;
+}
+
+.top {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.icon {
+  color: #a0d468;
+}
+
+.title {
+  font-size: 16px;
+  line-height: 20px;
+  font-weight: 800;
+
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box; /* Needed for applying the -webkit-line-clamp */
+  -webkit-line-clamp: 1; /* Limits the text to 1 line */
+  -webkit-box-orient: vertical;
+}
+
+.desc {
+  font-size: 14px;
+  line-height: 18px;
+  color: #71727a;
+}
+
+.caption {
+  font-size: 12px;
+  line-height: 25px;
+  font-weight: 500;
+  color: #a0d468;
+}
+
+.selected {
+  background-color: #eff6e5;
+  border-color: #d2f1b1;
+}
+
+/* AI 답변 스타일 */
+.aiAnswer {
+  background-color: rgba(160, 212, 104, 0.1);
+  border: 0.5px solid #a0d4681a;
+}
+
+/* 사용자 답변 스타일 */
+.userAnswer {
+  background-color: #fff;
+}
+
+.hash {
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 5px;
+  border: 1px solid #a0d468;
+  border-radius: 100px;
+  padding: 5px 10px;
+  background-color: #fff;
+  color: #a0d468;
+  width: 80px;
+  text-align: center;
+  font-weight: 600;
+}
